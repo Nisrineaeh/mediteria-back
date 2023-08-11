@@ -7,26 +7,24 @@ export class TechniqueMeditation {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ length: 200, nullable: true })
+    @Column()
     name: string;
 
-    @Column({ length: 200, nullable: true })
-    lien_image: string;
-
-    @Column({ length: 200, unique: true, nullable: true })
+    @Column()
     ambiance: string;
 
-    @Column({ length: 200, unique: true, nullable: true })
+    @Column({ type: 'text' })
     description: string;
 
-    @Column({ nullable: true })
-    duration: number;
+    @Column()
+    duration: string;
 
-    @Column({ length: 200, nullable: true })
-    lien_audio: string;
+    @Column()
+    images: string;
 
-    @Column({ length: 200, nullable: true })
-    ressenti: string;
+    @Column()
+    audio: string;
 
-
+    @Column('text', { array: true })
+    mot_clefs: string[];
 } 

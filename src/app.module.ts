@@ -7,7 +7,7 @@ import { UtilisateurModule } from './utilisateur/utilisateur.module';
 import { TechniqueMeditationModule } from './technique-meditation/technique-meditation.module';
 import { TechniqueMeditation } from './technique-meditation/entities/technique-meditation.entity';
 import * as dotenv from 'dotenv';
-import {ModalModule} from 'ngx-bootstrap/modal';
+
 
 dotenv.config({path: '.env'})
 
@@ -25,8 +25,7 @@ dotenv.config({path: '.env'})
       dropSchema: true,
     }),
     UtilisateurModule,
-    TechniqueMeditationModule,
-    ModalModule.forRoot()
+    TechniqueMeditationModule
   
   ],
   controllers: [AppController],
