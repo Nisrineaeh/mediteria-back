@@ -2,33 +2,39 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { TechniqueMeditationService } from './technique-meditation.service';
 import { CreateTechniqueMeditationDto } from './dto/create-technique-meditation.dto';
 import { UpdateTechniqueMeditationDto } from './dto/update-technique-meditation.dto';
+import { TechniqueMeditation } from './entities/technique-meditation.entity';
 
 @Controller('technique-meditation')
 export class TechniqueMeditationController {
-  constructor(private readonly techniqueMeditationService: TechniqueMeditationService) {}
+  constructor(private readonly techniqueMeditationService: TechniqueMeditationService) { }
 
   @Post()
-  create(@Body() createTechniqueMeditationDto: CreateTechniqueMeditationDto) {
+  async create(@Body() createTechniqueMeditationDto: CreateTechniqueMeditationDto): Promise<TechniqueMeditation> {
     return this.techniqueMeditationService.create(createTechniqueMeditationDto);
   }
 
+
+
   @Get()
-  findAll() {
+  async findAll(): Promise<TechniqueMeditation[]> {
     return this.techniqueMeditationService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string): Promise<TechniqueMeditation> {
     return this.techniqueMeditationService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTechniqueMeditationDto: UpdateTechniqueMeditationDto) {
+  async update(
+    @Param('id') id: string,
+    @Body() updateTechniqueMeditationDto: UpdateTechniqueMeditationDto,
+  ): Promise<TechniqueMeditation> {
     return this.techniqueMeditationService.update(+id, updateTechniqueMeditationDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string): Promise<void> {
     return this.techniqueMeditationService.remove(+id);
   }
 }
