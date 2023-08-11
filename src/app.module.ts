@@ -6,7 +6,9 @@ import { Utilisateur } from './utilisateur/entities/utilisateur.entity';
 import { UtilisateurModule } from './utilisateur/utilisateur.module';
 import { TechniqueMeditationModule } from './technique-meditation/technique-meditation.module';
 import { TechniqueMeditation } from './technique-meditation/entities/technique-meditation.entity';
+import * as dotenv from 'dotenv';
 
+dotenv.config({path: '.env'})
 
 @Module({
   imports: [
