@@ -50,7 +50,7 @@ export class TechniqueMeditationService {
   }
 
   async techniqueData(){
-    const data = [{
+    const techniques = [{
       "id": 1,
       "name": "Sérénité Zen",
       "ambiance": "Apaisante",
@@ -110,6 +110,21 @@ export class TechniqueMeditationService {
         "audio": "/assets/audio/Creativité.mp3",
         "mot_clefs": ["Inspiration", "Expressivité", "Créativité", "Libération", "Potentiel artistique"]
       }]
-      return this.techniqueMeditationRepository.save(data);
-  }
-}
+    console.log('Techniques à enregistrer:', techniques); // Affiche les techniques à enregistrer
+
+    try {
+      // Pour chaque technique, vérifiez si elle existe déjà
+      for (const technique of techniques) {
+        const exists = await this.techniqueMeditationRepository.findOne({ where: { name: technique.name } });
+        if (exists) {
+          console.log(`Technique avec le nom "${technique.name}" existe déjà.`);
+          continue; // Passez à la technique suivante si celle-ci existe déjà
+        }
+        await this.techniqueMeditationRepository.save(technique);
+        console.log('Technique enregistrée:', technique);
+      }
+    } catch (error) {
+      console.error(`Erreur lors de l'enregistrement des techniques: `, error);
+      throw new InternalServerErrorException(`Une erreur est survenue lors de l'enregistrement des techniques.`);
+    }
+}}

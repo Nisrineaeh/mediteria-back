@@ -13,11 +13,11 @@ export class TechniqueMeditationController {
     return this.techniqueMeditationService.create(createTechniqueMeditationDto);
   }
 
-
-
   @Get()
   async findAll(): Promise<TechniqueMeditation[]> {
-    return this.techniqueMeditationService.findAll();
+    const techniques = await this.techniqueMeditationService.findAll();
+    console.log('Techniques récupérées : ', techniques);
+    return techniques;
   }
 
   @Get(':id')
@@ -36,5 +36,10 @@ export class TechniqueMeditationController {
   @Delete(':id')
   async remove(@Param('id') id: string): Promise<void> {
     return this.techniqueMeditationService.remove(+id);
+  }
+
+  @Post('/techniques')
+  async techniquesTech(){
+    return this.techniqueMeditationService.techniqueData();
   }
 }
