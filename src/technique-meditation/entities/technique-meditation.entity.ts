@@ -17,7 +17,7 @@ export class TechniqueMeditation {
     description: string;
 
     @Column()
-    duration: string;
+    duration: number;
 
     @Column()
     images: string;

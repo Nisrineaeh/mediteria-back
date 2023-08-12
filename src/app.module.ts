@@ -22,7 +22,7 @@ dotenv.config({path: '.env'})
       database: process.env.DB_NAME,
       entities: [Utilisateur, TechniqueMeditation],
       synchronize: true,
-      dropSchema: false,
+      dropSchema: true,
     }),
     UtilisateurModule,
     TechniqueMeditationModule
