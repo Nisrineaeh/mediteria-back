@@ -6,7 +6,6 @@ import { Utilisateur } from './utilisateur/entities/utilisateur.entity';
 import { UtilisateurModule } from './utilisateur/utilisateur.module';
 import { TechniqueMeditationModule } from './technique-meditation/technique-meditation.module';
 import { TechniqueMeditation } from './technique-meditation/entities/technique-meditation.entity';
-import { MeditationSessionModule } from './meditation-session/meditation-session.module';
 import * as dotenv from 'dotenv';
 
 
@@ -27,7 +26,7 @@ dotenv.config({path: '.env'})
     }),
     UtilisateurModule,
     TechniqueMeditationModule,
-    MeditationSessionModule
+
   
   ],
   controllers: [AppController],
