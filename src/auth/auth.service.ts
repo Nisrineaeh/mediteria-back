@@ -1,4 +1,36 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Utilisateur } from 'src/utilisateur/entities/utilisateur.entity';
+import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
-export class AuthService {}
+export class AuthService {
+    constructor(
+        @InjectRepository(Utilisateur) private utilisateursRepository: Repository<Utilisateur>,
+        private readonly jwtService: JwtService){}
+
+    async validateUser(username: string, mot_de_passe: string): Promise<any> {
+        const utilisateur = await this.utilisateursRepository.findOne({
+            where: { username }
+        });
+
+        if (utilisateur) {
+            const isPasswordMatching = await bcrypt.compare(mot_de_passe, utilisateur.mot_de_passe);
+            if (isPasswordMatching) {
+                const { mot_de_passe, ...result } = utilisateur;
+                return result;
+            }
+        }
+
+        throw new UnauthorizedException();
+    }
+
+    async login(utilisateur: Utilisateur) {
+        const playload = { username: utilisateur.username, sub: utilisateur.id};
+        return {
+            acces_token: this.jwtService.sign(playload),
+        }
+    }
+}
