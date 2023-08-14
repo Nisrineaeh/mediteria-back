@@ -1,6 +1,12 @@
 import { JwtService } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
-import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpException, HttpStatus, Post, Res } from '@nestjs/common';
+
+
+class LoginDto{
+    username: string;
+    mot_de_passe: string;
+}
 
 @Controller('api')
 export class AuthController {
@@ -10,10 +16,11 @@ export class AuthController {
     ) { }
 
     @Post('login')
-    async login(@Body() loginDto: any, @Res() res: any) {
-        const user = await this.authService.validateUser(loginDto.username, loginDto.password);
+    @HttpCode(200)
+    async login(@Body() loginDto: LoginDto) {
+        const user = await this.authService.validateUser(loginDto.username, loginDto.mot_de_passe);
         if (!user) {
-            return res.status(HttpStatus.UNAUTHORIZED).json({ message: 'Invalid credentials' });
+            throw new HttpException('Accréditation non valide !', HttpStatus.UNAUTHORIZED);
         }
         const payload = { username: user.username, id: user.id };
         return {

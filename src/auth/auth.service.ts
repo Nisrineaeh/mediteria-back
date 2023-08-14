@@ -13,7 +13,7 @@ export class AuthService {
 
     async validateUser(username: string, mot_de_passe: string): Promise<any> {
         const utilisateur = await this.utilisateursRepository.findOne({
-            where: { username }
+            where: { email:username }
         });
 
         if (utilisateur) {
@@ -30,7 +30,7 @@ export class AuthService {
     async login(utilisateur: Utilisateur) {
         const playload = { username: utilisateur.username, sub: utilisateur.id};
         return {
-            acces_token: this.jwtService.sign(playload),
+            access_token: this.jwtService.sign(playload),
         }
     }
 }

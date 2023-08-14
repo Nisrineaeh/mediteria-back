@@ -10,6 +10,7 @@ import * as dotenv from 'dotenv';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './auth/auth.service';
+import { AuthController } from './auth/auth.controller';
 
 
 dotenv.config({path: '.env'})
@@ -31,12 +32,12 @@ dotenv.config({path: '.env'})
     TechniqueMeditationModule,
     PassportModule.register({defaultStrategy: 'jwt'}),
     JwtModule.register({
-      secret: 'nopainnogain2023',
+      secret: process.env.JWT_SECRET,
       signOptions: {expiresIn: '2h'},
     })
   
   ],
-  controllers: [AppController],
+  controllers: [AppController, AuthController],
   providers: [AppService, AuthService],
 })
 export class AppModule {}
