@@ -7,6 +7,9 @@ import { UtilisateurModule } from './utilisateur/utilisateur.module';
 import { TechniqueMeditationModule } from './technique-meditation/technique-meditation.module';
 import { TechniqueMeditation } from './technique-meditation/entities/technique-meditation.entity';
 import * as dotenv from 'dotenv';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule } from '@nestjs/jwt';
+import { AuthService } from './auth/auth.service';
 
 
 dotenv.config({path: '.env'})
@@ -26,10 +29,14 @@ dotenv.config({path: '.env'})
     }),
     UtilisateurModule,
     TechniqueMeditationModule,
-
+    PassportModule.register({defaultStrategy: 'jwt'}),
+    JwtModule.register({
+      secret: 'nopainnogain2023',
+      signOptions: {expiresIn: '2h'},
+    })
   
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AuthService],
 })
 export class AppModule {}

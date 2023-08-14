@@ -30,6 +30,7 @@
     "bcrypt": "^5.1.0",
     "class-validator": "^0.14.0",
     "ngx-bootstrap": "^11.0.2",
+    "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "pg": "^8.11.2",
     "reflect-metadata": "^0.1.13",
