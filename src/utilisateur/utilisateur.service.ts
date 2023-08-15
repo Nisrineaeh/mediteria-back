@@ -5,12 +5,16 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Utilisateur } from './entities/utilisateur.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { Observable } from 'rxjs';
 @Injectable()
 export class UtilisateurService {
+
+  private api_url = 'http://localhost:8080/utilisateur';
+
   constructor(
     @InjectRepository(Utilisateur)
     private readonly utilisateursRepository: Repository<Utilisateur>,
-  ) { }
+ ) { }
 
   async create(createUtilisateurDto: CreateUtilisateurDto): Promise<Utilisateur> {
     const { mot_de_passe, ...rest } = createUtilisateurDto;
@@ -85,4 +89,19 @@ export class UtilisateurService {
   async findByEmail(email: string): Promise<Utilisateur | undefined> {
     return this.utilisateursRepository.findOne({ where: { email: email } })
   }
+
+  //profil utilisateur co
+
+  async getProfil(userId: number): Promise<Utilisateur> {
+    const user = await this.utilisateursRepository.findOne({
+      where: { id: userId }
+    });
+
+    if (!user) {
+      throw new NotFoundException(`User with ID ${userId} not found`);
+    }
+    return user;
+  }
+
+
 }
