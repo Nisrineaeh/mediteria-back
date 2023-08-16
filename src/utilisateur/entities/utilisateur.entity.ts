@@ -5,7 +5,7 @@ import { Column, Entity, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 't
 export class Utilisateur {
 
     @PrimaryGeneratedColumn()
-    id?: number;
+    id: number;
 
     @Column({ length: 200, nullable: true })
     nom: string;
