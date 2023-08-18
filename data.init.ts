@@ -5,7 +5,7 @@ export const initialTechniques: TechniqueMeditation[] = [
     {
         id: 0,
         name: "Sérénité Zen",
-        ambiance: "Apaisante",
+        ambiance: "Apaisant",
         description: "Méditation pour trouver la paix intérieure et l'harmonie avec la nature.",
         duration: 10,
         images: "/assets/serenité.jpg",
@@ -15,7 +15,7 @@ export const initialTechniques: TechniqueMeditation[] = [
     {
         id: 1,
         name: "Voyage Cosmique",
-        ambiance: "Spatiale",
+        ambiance: "Spatial",
         description: "Méditation pour explorer l'univers intérieur et se connecter à l'infini.",
         duration: 11,
         images: "/assets/etoile.jpg",
@@ -25,7 +25,7 @@ export const initialTechniques: TechniqueMeditation[] = [
     {
         id: 2,
         name: "Détox Numérique",
-        ambiance: "Déconnexion",
+        ambiance: "de Déconnexion",
         description: "Méditation pour se détacher du numérique et retrouver le calme intérieur.",
         duration: 13,
         images: "/assets/détox.jpg",
@@ -45,7 +45,7 @@ export const initialTechniques: TechniqueMeditation[] = [
     {
         id: 4,
         name: "Plongée Abyssale",
-        ambiance: "Océan",
+        ambiance: "Océanique",
         description: "Méditation pour respirer correctement et plonger au cœur des abysses marins.",
         duration: 10,
         images: "/assets/ocean.jpg",
@@ -55,7 +55,7 @@ export const initialTechniques: TechniqueMeditation[] = [
     {
         id: 6,
         name: "Flux Créatif",
-        ambiance: "Créativité",
+        ambiance: "de Créativité",
         description: "Méditation pour stimuler la créativité et libérer son potentiel artistique.",
         duration: 12,
         images: "/assets/creativite.jpg",
