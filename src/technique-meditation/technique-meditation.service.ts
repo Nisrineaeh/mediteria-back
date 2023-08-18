@@ -4,6 +4,7 @@ import { UpdateTechniqueMeditationDto } from './dto/update-technique-meditation.
 import { InjectRepository } from '@nestjs/typeorm';
 import { TechniqueMeditation } from './entities/technique-meditation.entity';
 import { Repository } from 'typeorm';
+import { initialTechniques } from 'data.init';
 
 
 @Injectable()
@@ -49,5 +50,11 @@ export class TechniqueMeditationService {
     }
   }
 
- 
+  async initialiserDonnees(){
+    const count = await this.techniqueMeditationRepository.count();
+    if(count === 0){
+      await this.techniqueMeditationRepository.save(initialTechniques);
+    }
+  }
+
 }

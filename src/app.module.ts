@@ -11,12 +11,14 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './auth/auth.service';
 import { AuthController } from './auth/auth.controller';
+import { TechniqueMeditationService } from './technique-meditation/technique-meditation.service';
 
 
 dotenv.config({path: '.env'})
 
 @Module({
   imports: [
+    TypeOrmModule.forFeature([TechniqueMeditation]),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,
@@ -38,6 +40,7 @@ dotenv.config({path: '.env'})
   
   ],
   controllers: [AppController, AuthController],
-  providers: [AppService, AuthService],
+  providers: [AppService, AuthService, TechniqueMeditationService],
+  exports: [TechniqueMeditationService],
 })
 export class AppModule {}
