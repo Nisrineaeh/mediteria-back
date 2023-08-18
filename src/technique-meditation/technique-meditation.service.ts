@@ -57,4 +57,8 @@ export class TechniqueMeditationService {
     }
   }
 
+  async addTechnique(technique: TechniqueMeditation): Promise<TechniqueMeditation>{
+    return this.techniqueMeditationRepository.save(technique);
+  }
+
 }

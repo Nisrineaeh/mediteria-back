@@ -37,6 +37,10 @@ export class TechniqueMeditationController {
     return this.techniqueMeditationService.remove(+id);
   }
 
+  @Post()
+  addTechnique(@Body() technique: TechniqueMeditation): Promise<TechniqueMeditation>{
+    return this.techniqueMeditationService.addTechnique(technique);
+  }
 
 
   }
