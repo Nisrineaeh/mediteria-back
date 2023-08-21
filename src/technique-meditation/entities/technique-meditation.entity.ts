@@ -3,7 +3,7 @@ import { Column, Entity, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 't
 @Entity('technique_meditation')
 export class TechniqueMeditation {
 
-
+    
     @PrimaryGeneratedColumn()
     id: number;
 
