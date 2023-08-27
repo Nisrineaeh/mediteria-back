@@ -12,6 +12,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './auth/auth.service';
 import { AuthController } from './auth/auth.controller';
 import { TechniqueMeditationService } from './technique-meditation/technique-meditation.service';
+import { JwtStrategy } from './auth/jwt.strategy';
 
 
 dotenv.config({path: '.env'})
@@ -40,7 +41,7 @@ dotenv.config({path: '.env'})
   
   ],
   controllers: [AppController, AuthController],
-  providers: [AppService, AuthService, TechniqueMeditationService],
+  providers: [AppService, AuthService, TechniqueMeditationService, JwtStrategy],
   exports: [TechniqueMeditationService],
 })
 export class AppModule {}

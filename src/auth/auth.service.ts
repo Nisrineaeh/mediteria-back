@@ -31,8 +31,8 @@ export class AuthService {
         const playload = { username: utilisateur.username, sub: utilisateur.id};
         return {
             access_token: this.jwtService.sign(playload),
-            user_id: utilisateur.id
-            
+            user_id: utilisateur.id,
+            email: utilisateur.email
         }
     }
 }

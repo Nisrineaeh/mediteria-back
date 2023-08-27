@@ -1,11 +1,11 @@
-import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CreateUtilisateurDto } from './dto/create-utilisateur.dto';
 import { UpdateUtilisateurDto } from './dto/update-utilisateur.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Utilisateur } from './entities/utilisateur.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { Observable } from 'rxjs';
+
 @Injectable()
 export class UtilisateurService {
 
@@ -14,22 +14,31 @@ export class UtilisateurService {
   constructor(
     @InjectRepository(Utilisateur)
     private readonly utilisateursRepository: Repository<Utilisateur>,
- ) { }
+  ) { }
 
   async create(createUtilisateurDto: CreateUtilisateurDto): Promise<Utilisateur> {
-    const { mot_de_passe, ...rest } = createUtilisateurDto;
+    try {
+      const { mot_de_passe, ...rest } = createUtilisateurDto;
 
-    // Hachage du mot de passe
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(createUtilisateurDto.mot_de_passe, saltRounds);
+      // Hachage du mot de passe
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(createUtilisateurDto.mot_de_passe, saltRounds);
 
-    // Création de l'utilisateur avec le mot de passe haché
-    const nouvelUtilisateur = this.utilisateursRepository.create({
-      ...rest,
-      mot_de_passe: hashedPassword,
-    });
+      // Création de l'utilisateur avec le mot de passe haché
+      const nouvelUtilisateur = this.utilisateursRepository.create({
+        ...rest,
+        mot_de_passe: hashedPassword,
+      });
 
-    return this.utilisateursRepository.save(nouvelUtilisateur);
+      return this.utilisateursRepository.save(nouvelUtilisateur);
+    } catch (err) {
+      if (err.code === '23505') {
+        throw new HttpException('L\'email ou le nom d\'utilisateur existe déjà', HttpStatus.BAD_REQUEST);
+      } else {
+        console.error("Erreur lors de la création de l'utilisateur:", err);
+        throw new InternalServerErrorException('Erreur lors de la création de l\'utilisateur');
+      }
+    }
   }
 
   async findAll(): Promise<Utilisateur[]> {

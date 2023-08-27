@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request, NotFoundException } from '@nestjs/common';
 import { UtilisateurService } from './utilisateur.service';
 import { CreateUtilisateurDto } from './dto/create-utilisateur.dto';
 import { UpdateUtilisateurDto } from './dto/update-utilisateur.dto';
 import { Utilisateur } from './entities/utilisateur.entity';
 import { AuthGuard } from '@nestjs/passport';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('utilisateur')
 export class UtilisateurController {
@@ -19,15 +20,18 @@ export class UtilisateurController {
     return this.utilisateursService.findAll();
   }
 
+
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Utilisateur> {
     return this.utilisateursService.findOne(+id);
   }
 
+
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateUtilisateurDto: UpdateUtilisateurDto): Promise<Utilisateur> {
     return this.utilisateursService.update(+id, updateUtilisateurDto);
   }
+
 
   @Delete(':id')
   async remove(@Param('id') id: string): Promise<void> {
@@ -40,5 +44,14 @@ export class UtilisateurController {
   @UseGuards(AuthGuard('jwt'))
   async getMe(@Request() req): Promise<Utilisateur>{
     return this.utilisateursService.findOne(req.utilisateur.id)
+  }
+
+  @Get('findByEmail/:email')
+  async findByEmail(@Param('email') email: string): Promise<Utilisateur> {
+    const user = await this.utilisateursService.findByEmail(email);
+    if (!user) {
+      throw new NotFoundException(`Aucun utilisateur trouvé avec l'email: ${email}`);
+    }
+    return user;
   }
 }
