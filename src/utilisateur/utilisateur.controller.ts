@@ -26,7 +26,7 @@ export class UtilisateurController {
     return this.utilisateursService.findOne(+id);
   }
 
-
+  
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateUtilisateurDto: UpdateUtilisateurDto): Promise<Utilisateur> {
     return this.utilisateursService.update(+id, updateUtilisateurDto);
