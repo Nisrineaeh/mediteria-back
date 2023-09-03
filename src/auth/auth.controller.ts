@@ -4,7 +4,7 @@ import { Body, Controller, HttpCode, HttpException, HttpStatus, Post, Res } from
 
 
 class LoginDto{
-    username: string;
+    email: string;
     mot_de_passe: string;
 }
 
@@ -18,13 +18,14 @@ export class AuthController {
     @Post('login')
     @HttpCode(200)
     async login(@Body() loginDto: LoginDto) {
-        const user = await this.authService.validateUser(loginDto.username, loginDto.mot_de_passe);
+        const user = await this.authService.validateUser(loginDto.email, loginDto.mot_de_passe);
         if (!user) {
             throw new HttpException('Accréditation non valide !', HttpStatus.UNAUTHORIZED);
         }
-        const payload = { username: user.username, id: user.id };
+        const payload = { email: user.email, id: user.id };
         return {
             access_token: this.jwtService.sign(payload),
+            user_id: user.id
         };
     }
 }

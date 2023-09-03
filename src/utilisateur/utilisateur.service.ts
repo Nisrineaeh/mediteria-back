@@ -49,6 +49,7 @@ export class UtilisateurService {
     const user = await this.utilisateursRepository.findOne({ where: { id: id } });
     if (!user) throw new NotFoundException(`L'utilisateur ID n° ${id} n'existe pas !`);
     return user;
+
   }
 
   async update(id: number, updateUtilisateurDto: UpdateUtilisateurDto): Promise<Utilisateur> {
@@ -73,18 +74,7 @@ export class UtilisateurService {
     }
   }
 
-  async findByEmailandPassword(email: string, mot_de_passe: string): Promise<Utilisateur | undefined> {
-    console.log('Recherche de l\'utilisateur par e-mail et mot de passe...');
-    const utilisateur = await this.utilisateursRepository.findOne({ where: { email: email } });
-    if (utilisateur) {
-      const match = await bcrypt.compare(mot_de_passe, utilisateur.mot_de_passe);
-      if (match) {
-        return utilisateur;
-      }
-    }
 
-    return null; // Retourne null si l'utilisateur n'est pas trouvé ou si le mot de passe ne correspond pas.
-  }
 
   async verifierConnexion(email: string, mdp: string): Promise<boolean> {
     const utilisateur = await this.utilisateursRepository.findOne({ where: { email: email } });
@@ -95,9 +85,9 @@ export class UtilisateurService {
     return false; // Aucun utilisateur trouvé
   }
 
-  async findByEmail(email: string): Promise<Utilisateur | undefined> {
-    return this.utilisateursRepository.findOne({ where: { email: email } })
-  }
+  // async findByEmail(email: string): Promise<Utilisateur | undefined> {
+  //   return this.utilisateursRepository.findOne({ where: { email: email } })
+  // }
 
   //profil utilisateur co
 

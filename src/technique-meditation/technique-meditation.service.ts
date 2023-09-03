@@ -1,10 +1,11 @@
-import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException, UseGuards } from '@nestjs/common';
 import { CreateTechniqueMeditationDto } from './dto/create-technique-meditation.dto';
 import { UpdateTechniqueMeditationDto } from './dto/update-technique-meditation.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TechniqueMeditation } from './entities/technique-meditation.entity';
 import { Repository } from 'typeorm';
 import { initialTechniques } from 'data.init';
+import { AuthGuard } from '@nestjs/passport';
 
 
 @Injectable()
@@ -57,6 +58,7 @@ export class TechniqueMeditationService {
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   async addTechnique(technique: TechniqueMeditation): Promise<TechniqueMeditation>{
     return this.techniqueMeditationRepository.save(technique);
   }

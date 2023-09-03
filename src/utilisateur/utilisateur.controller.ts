@@ -5,6 +5,7 @@ import { UpdateUtilisateurDto } from './dto/update-utilisateur.dto';
 import { Utilisateur } from './entities/utilisateur.entity';
 import { AuthGuard } from '@nestjs/passport';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { log } from 'console';
 
 @Controller('utilisateur')
 export class UtilisateurController {
@@ -14,7 +15,7 @@ export class UtilisateurController {
   async create(@Body() createUtilisateurDto: CreateUtilisateurDto): Promise<Utilisateur> {
     return this.utilisateursService.create(createUtilisateurDto);
   }
-
+  
   @Get()
   async findAll(): Promise<Utilisateur[]> {
     return this.utilisateursService.findAll();
@@ -39,19 +40,19 @@ export class UtilisateurController {
   }
 
   //infos de l'utilisateur connecter
-
-  @Get('me')
-  @UseGuards(AuthGuard('jwt'))
-  async getMe(@Request() req): Promise<Utilisateur>{
+  // @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  async getProfile(@Request() req): Promise<Utilisateur>{
+    console.log(req.utilisateur)
     return this.utilisateursService.findOne(req.utilisateur.id)
   }
 
-  @Get('findByEmail/:email')
-  async findByEmail(@Param('email') email: string): Promise<Utilisateur> {
-    const user = await this.utilisateursService.findByEmail(email);
-    if (!user) {
-      throw new NotFoundException(`Aucun utilisateur trouvé avec l'email: ${email}`);
-    }
-    return user;
-  }
+  // @Get('findByEmail/:email')
+  // async findByEmail(@Param('email') email: string): Promise<Utilisateur> {
+  //   const user = await this.utilisateursService.findByEmail(email);
+  //   if (!user) {
+  //     throw new NotFoundException(`Aucun utilisateur trouvé avec l'email: ${email}`);
+  //   }
+  //   return user;
+  // }
 }

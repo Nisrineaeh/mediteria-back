@@ -11,9 +11,9 @@ export class AuthService {
         @InjectRepository(Utilisateur) private utilisateursRepository: Repository<Utilisateur>,
         private readonly jwtService: JwtService){}
 
-    async validateUser(username: string, mot_de_passe: string): Promise<any> {
+    async validateUser(email: string, mot_de_passe: string): Promise<any> {
         const utilisateur = await this.utilisateursRepository.findOne({
-            where: { email:username }
+            where: { email:email }
         });
 
         if (utilisateur) {
@@ -28,7 +28,7 @@ export class AuthService {
     }
 
     async login(utilisateur: Utilisateur) {
-        const playload = { username: utilisateur.username, sub: utilisateur.id};
+        const playload = { email: utilisateur.email, sub: utilisateur.id};
         return {
             access_token: this.jwtService.sign(playload),
             user_id: utilisateur.id,
