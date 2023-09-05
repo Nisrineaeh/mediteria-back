@@ -9,26 +9,26 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 export class TechniqueMeditationController {
   constructor(private readonly techniqueMeditationService: TechniqueMeditationService) { }
 
-
+  @UseGuards(JwtAuthGuard)
   @Post()
   async create(@Body() createTechniqueMeditationDto: CreateTechniqueMeditationDto): Promise<TechniqueMeditation> {
     return this.techniqueMeditationService.create(createTechniqueMeditationDto);
   }
 
-
+  @UseGuards(JwtAuthGuard)
   @Get()
   async findAll(): Promise<TechniqueMeditation[]> {
     return this.techniqueMeditationService.findAll();
   
   }
 
-
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<TechniqueMeditation> {
     return this.techniqueMeditationService.findOne(+id);
   }
 
- 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   async update(
     @Param('id') id: string,
@@ -37,7 +37,7 @@ export class TechniqueMeditationController {
     return this.techniqueMeditationService.update(+id, updateTechniqueMeditationDto);
   }
 
- 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string): Promise<void> {
     return this.techniqueMeditationService.remove(+id);
